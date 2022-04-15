@@ -70,60 +70,60 @@
                        </div>
 
 {#                        电影海报下面的推荐模块#}
-                       {% if similar_movies %}
-                       <h4 class="side-t-w3l-agile">SIMILAR
-                       <span>MOVIES</span></h4>
-                       <div class="w3_agile_latest_movies">
-
-                           <div id="owl-demo" class="owl-carousel owl-theme">
-                               {% for similarmovie in similar_movies %}
-                                <div class="item">
-                                    <a href="{% url 'movieinfo' similarmovie.id %}" class="hvr-sweep-to-bottom">
-                                    <div class="img_limit_simliar">
-                                        <img src="{{ similarmovie.picture }}" title="SimMovies Pro" class="img-responsive-simliar" alt=" " /></div></a>
-                                        <div class="mid-1 agileits_w3layouts_mid_1_home simliar_mid">
-                                            <div class="w3l-movie-text">
-                                                <a href="{%  url 'movieinfo' similarmovie.id %}">{{ similarmovie.moviename }}</a></h6>
-                                            </div>
-                                            <div class="mid-2 agile_mid_2_home">
-                                                <p>{{ similarmovie.releasedate }}</p>
-                                                <br>
-                                                <div class="rat2_sim">{{similarmovie.averating}}分</div>
-                                                <div class="rat_sim"></div>
-
-                                                <script>
-                                                    var rating = document.getElementsByClassName("rat_sim");
-                                                    var src = "rating00";
-                                                    if(parseFloat({{similarmovie.averating}})>0.0&&parseFloat({{similarmovie.averating}})<1.0){
-                                                    src = "rating05";
-                                                    }else if(parseFloat({{similarmovie.averating}})>1.0&&parseFloat({{similarmovie.averating}})<2.0){
-                                                    src = "rating15";
-                                                    }else if(parseFloat({{similarmovie.averating}})>2.0&&parseFloat({{similarmovie.averating}})<3.0){
-                                                    src = "rating25";
-                                                    }else if(parseFloat({{similarmovie.averating}})>3.0&&parseFloat({{similarmovie.averating}})<4.0){
-                                                    src = "rating35";
-                                                    }else if(parseFloat({{similarmovie.averating}})>4.0&&parseFloat({{similarmovie.averating}})<5.0){
-                                                    src = "rating45";
-                                                    }else{
-                                                    src = "rating"+parseInt({{similarmovie.averating}}).toString()+"0";
-                                                    }
-                                                    rating[rating.length-1].setAttribute("id",src);
-                                                </script>
-                                                <div class="rat_sim"></div>
-                                                <div class="clearfix"></div>
-                                            </div>
+{#                       {% if similar_movies %}#}
+{#                       <h4 class="side-t-w3l-agile">SIMILAR#}
+{#                       <span>MOVIES</span></h4>#}
+{#                       <div class="w3_agile_latest_movies">#}
+{##}
+{#                           <div id="owl-demo" class="owl-carousel owl-theme">#}
+{#                               {% for similarmovie in similar_movies %}#}
+{#                                <div class="item">#}
+{#                                    <a href="{% url 'movieinfo' similarmovie.id %}" class="hvr-sweep-to-bottom">#}
+{#                                    <div class="img_limit_simliar">#}
+{#                                        <img src="{{ similarmovie.picture }}" title="SimMovies Pro" class="img-responsive-simliar" alt=" " /></div></a>#}
+{#                                        <div class="mid-1 agileits_w3layouts_mid_1_home simliar_mid">#}
+{#                                            <div class="w3l-movie-text">#}
+{#                                                <a href="{%  url 'movieinfo' similarmovie.id %}">{{ similarmovie.moviename }}</a></h6>#}
+{#                                            </div>#}
+{#                                            <div class="mid-2 agile_mid_2_home">#}
+{#                                                <p>{{ similarmovie.releasedate }}</p>#}
+{#                                                <br>#}
+{#                                                <div class="rat2_sim">{{similarmovie.averating}}分</div>#}
+{#                                                <div class="rat_sim"></div>#}
+{##}
+{#                                                <script>#}
+{#                                                    var rating = document.getElementsByClassName("rat_sim");#}
+{#                                                    var src = "rating00";#}
+{#                                                    if(parseFloat({{similarmovie.averating}})>0.0&&parseFloat({{similarmovie.averating}})<1.0){#}
+{#                                                    src = "rating05";#}
+{#                                                    }else if(parseFloat({{similarmovie.averating}})>1.0&&parseFloat({{similarmovie.averating}})<2.0){#}
+{#                                                    src = "rating15";#}
+{#                                                    }else if(parseFloat({{similarmovie.averating}})>2.0&&parseFloat({{similarmovie.averating}})<3.0){#}
+{#                                                    src = "rating25";#}
+{#                                                    }else if(parseFloat({{similarmovie.averating}})>3.0&&parseFloat({{similarmovie.averating}})<4.0){#}
+{#                                                    src = "rating35";#}
+{#                                                    }else if(parseFloat({{similarmovie.averating}})>4.0&&parseFloat({{similarmovie.averating}})<5.0){#}
+{#                                                    src = "rating45";#}
+{#                                                    }else{#}
+{#                                                    src = "rating"+parseInt({{similarmovie.averating}}).toString()+"0";#}
+{#                                                    }#}
+{#                                                    rating[rating.length-1].setAttribute("id",src);#}
+{#                                                </script>#}
+{#                                                <div class="rat_sim"></div>#}
+{#                                                <div class="clearfix"></div>#}
+{#                                            </div>#}
     {#                                        <p>{{ similarmovie.releasedate }}</p>#}
-
-                                            </div>
-                                                <!-- <div class="ribben one">
-                                                  <p>NEW</p>
-                                                  </div> -->
-                                            </div>
-                                {% endfor %}
-                           </div>
-                       </div>
-                       {% else %}
-                       {% endif %}
+{##}
+{#                                            </div>#}
+{#                                                <!-- <div class="ribben one">#}
+{#                                                  <p>NEW</p>#}
+{#                                                  </div> -->#}
+{#                                            </div>#}
+{#                                {% endfor %}#}
+{#                           </div>#}
+{#                       </div>#}
+{#                       {% else %}#}
+{#                       {% endif %}#}
 {#相似end#}
                        <br>
                        <div class="single-agile-shar-buttons">
