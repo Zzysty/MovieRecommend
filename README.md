@@ -2,6 +2,12 @@
 
 使用Django2.2+MySQL,其中MySQL部分支持在线计算
 
+毕设项目
+数据集包含MovieLens and 爬虫(猫眼TOP1000)
+推荐算法为’协同过滤->基于物品(电影)推荐’
+评测指标’对比UserCF | ItemCF 的Precision、Recall、Coverage、Popularity四项指标’
+include Django & MySQL & Vue & ElementUI & jQuery & bootstrap
+
 ## app
 
 - MovieSizer
