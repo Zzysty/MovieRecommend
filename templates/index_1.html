@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load staticfiles%}
+{% block title %}首 页{% endblock %}
+{% block bread %}
+    <li>
+        <div class="left">
+            <a href="{% url 'index_1'%}">首页</a>
+        </div>
+        <div class="col-lg-4 right">
+            <form role="search" method="get" action="{% url 'search' %}">
+                <div class="input-group">
+                    <input type="search" name="key" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+                {% csrf_token %}
+            </form>
+        </div>
+    </li>
+{% endblock %}
+{% block content %}
+
+<p>
+    <h2 align="center">
+        电影列表
+    </h2>
+<br>
+<br>
+
+{% for movie in movie_list %}
+    <div class="w3l-movie-gride-agile">
+
+        <a href="{% url 'movieinfo' movie.id %}" class="hvr-sweep-to-bottom">
+        <div class="img_limit">
+            <img src="{{ movie.picture }}" title="Movies Pro" class="img-responsive" alt=" ">
+        </div>
+    </a>
+
+    <div class="mid-1 agileits_w3layouts_mid_1_home">
+        <div class="w3l-movie-text">
+            <h6><a href="{% url 'movieinfo' movie.id %}">{{ movie.moviename }}</a></h6>
+        </div>
+        <div class="mid-2 agile_mid_2_home">
+            <p>{{ movie.releasedate }}</p>
+            <div class="rat2">{{movie.averating}}分</div>
+            <div class="rat"></div>
+
+{#            每部电影下面的评分#}
+            <script>
+                var rating = document.getElementsByClassName("rat");
+                var src;
+                if(parseFloat({{movie.averating}})>0.0&&parseFloat({{movie.averating}})<1.0){
+                    src = "rating05";
+                }else if(parseFloat({{movie.averating}})>1.0&&parseFloat({{movie.averating}})<2.0){
+                    src = "rating15";
+                }else if(parseFloat({{movie.averating}})>2.0&&parseFloat({{movie.averating}})<3.0){
+                    src = "rating25";
+                }else if(parseFloat({{movie.averating}})>3.0&&parseFloat({{movie.averating}})<4.0){
+                    src = "rating35";
+                }else if(parseFloat({{movie.averating}})>4.0&&parseFloat({{movie.averating}})<5.0){
+                    src = "rating45";
+                }else{
+                    src = "rating"+parseInt({{movie.averating}}).toString()+"0";
+                }
+                rating[rating.length-1].setAttribute("id",src);
+                //alert(src);
+            </script>
+
+            <div class="rat"></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<div style="text-align: center">
+    {#   分页条   #}
+    <nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if movie_list.has_previous %}
+            <li>
+                <a rel="nofollow" href="?page=1" aria-label="Previous">
+                    <span aria-hidden="true">首页</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="?page={{ movie_list.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for page_num in page_range %}
+            {% if page_num == movie_list.number %}
+                <li class="active">
+                    <a href="#">
+                        {{ page_num }}
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+            {% else %}
+                {% if page_num == '...' %}
+                    <li><span>{{ page_num }}</span></li>
+                {% else %}
+                    <li>
+                        <a href="?page={{ page_num }}">{{ page_num }}
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if movie_list.has_next %}
+            <li>
+                <a href="?page={{ movie_list.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+
+            <li>
+                <a rel="nofollow" href="?page=25" aria-label="Next">
+                    <span aria-hidden="true">尾页</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
+
+<div>
+    <div>
+        <div>
+            <div></div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="cleafix"></div>
+    </div>
+</div>
+
+{% endblock %}

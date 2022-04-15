@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}个人主页{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+{% endblock %}
+
+{% block bread %}
+    <li>
+        <div class="left"><a href="{% url 'index_1'%}">首页</a></div>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <!-- 引入Vue和element的js文件 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script src="//unpkg.com/element-ui@2.15.7/lib/index.js"></script>
+<script src="/static/jquery/jquery.min.js"></script>
+
+
+<div class="page-header">
+    <h1 align="center">{{ user.username }}<small>&nbsp&nbsp的个人信息</small></h1>
+</div>
+
+<div id="app">
+    <div class="content">
+        <div class="avatar" align="center">
+            <span @click="avatar_drawer = true">
+                 <el-avatar class="img-avatar" :size="100" src="http://127.0.0.1:8000/media/avatars/{{ user.image }}"></el-avatar>
+            </span>
+        </div>
+{#            抽屉#}
+        <el-drawer
+            title="头像"
+            :visible.sync="avatar_drawer"
+            :direction="a_direction"
+            :before-close="handleClose">
+            <el-form action="{% url 'edit_avatar' %}" method="post">
+{#                {% for avatar in avatars %}#}
+{#                <div class="avatar_change">#}
+{#                    <el-avatar class="img-avatars" :size="80"#}
+{#                               src="{{ avatar.url }}">#}
+{#                    </el-avatar>#}
+{#                </div>#}
+{#                {% endfor %}#}
+                <el-collapse v-model="add_activeNames">
+
+                        <div class="left">
+                            <el-select class="select_info" @change="select_avatar"
+                                       v-model="avatar_id" placeholder="请选择头像" name="avatar">
+                                {% for avatar in avatars %}
+                                    <el-option
+                                        label="{{ avatar.url }}"
+                                        value="{{ avatar.id }}">
+                                    </el-option>
+                                {% endfor %}
+                            </el-select>
+                        </div>
+
+                        <div class="right">
+                                <el-avatar class="el-avatar-loc" :size="100">
+                                    <img class="avatar_img" alt="" src="/media/avatars/{{ user_avatar.image }}">
+                                </el-avatar>
+                        </div>
+
+                </el-collapse>
+                <el-button type="primary" native-type="submit" size="large"
+                           style="position: absolute;bottom: 25px;right: 25px;">保存
+                </el-button>
+                {% csrf_token %}
+            </el-form>
+        </el-drawer>
+
+        <el-drawer
+            title="修改用户信息"
+            :visible.sync="userinfo_drawer"
+            :direction="u_direction"
+            :before-close="handleClose">
+
+            <el-radio-group v-model="labelPosition" size="small"></el-radio-group>
+            <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign"
+                     style="margin: 10px;"
+                     action="{% url 'edit_userinfo' %}" method="post">
+                <el-form-item label="用户名">
+                    <el-input v-model="formLabelAlign.username" name="username"></el-input>
+                </el-form-item>
+                <el-form-item label="性别">
+                    <el-input v-model="formLabelAlign.gender" name="gender"></el-input>
+                </el-form-item>
+                <el-form-item label="地址">
+                    <el-input v-model="formLabelAlign.location" name="location"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱">
+                    <el-input v-model="formLabelAlign.email" name="email"></el-input>
+                </el-form-item>
+
+                <el-button type="primary" native-type="submit" size="large"
+                       style="position: absolute;bottom: 25px;right: 25px;">提交
+                </el-button>
+                {% csrf_token %}
+            </el-form>
+        </el-drawer>
+
+        <el-descriptions title="用户信息">
+            <template slot="extra">
+                <el-button type="primary" size="medium" id="edit_info"
+                           @click="userinfo_drawer = true">编辑
+                </el-button>
+            </template>
+            <el-descriptions-item label="用户名">{{ user.username }}</el-descriptions-item>
+            <el-descriptions-item label="邮箱">{{ user.email }}</el-descriptions-item>
+            <el-descriptions-item label="性别">{{ user.gender }}</el-descriptions-item>
+            <el-descriptions-item label="备注">
+                {% if user.is_staff == 1 %}
+                    <el-tag size="small">管理员</el-tag>
+                {% else %}
+                    <el-tag size="small">普通用户</el-tag>
+                {% endif %}
+            </el-descriptions-item>
+            {% if user.location == null %}
+                <el-descriptions-item label="地址">略</el-descriptions-item>
+            {% else %}
+                <el-descriptions-item label="地址">{{ user.location }}</el-descriptions-item>
+            {% endif %}
+        </el-descriptions>
+    </div>
+</div>
+
+
+<div class="movie-header">
+    <h1>Movies<small>&nbsp&nbsp&nbsp已评价</small></h1>
+</div>
+{% for rating in rating %}
+    <div class="movie-content">
+        <div class="left">
+            <a href="{% url 'movieinfo' rating.movie.id %}" class="">
+                <div class="img_limit">
+                    <img src="{{ rating.movie.picture }}" title="Movies Pro" alt=" ">
+                </div>
+            </a>
+        </div>
+        <div class="right">
+            <div class="movie_name">
+                <h3><i>{{ rating.movie.moviename }}</i></h3>
+                <form action="{% url 'del_ratmovie' rating.movie.id %}" method="post">
+                    <button type="submit" name="{{ rating.movie.id }}" style="float: right">删除</button>
+                    {% csrf_token %}
+                </form>
+            </div>
+            <div class="rating_content" style="margin-top:20px">
+                <span>评论内容:&nbsp{{ rating.content }}</span>
+            </div>
+            <div class="rating_star" style="margin-top:20px">
+                <span>已评分:&nbsp{{ rating.star }}</span>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+<style>
+    .page-header {
+        margin-bottom: 30px;
+    }
+    .content {
+        width: calc(100% - 750px);
+        margin: 0 auto;
+    }
+    .movie-header {
+        text-align: center;
+        margin: 30px;
+    }
+    .movie-content {
+        display: flex;
+        width: calc(100% - 600px);
+        margin: 0 auto;
+        padding: 0 0 20px 0;
+    }
+    .movie-content .left {
+        width: 30%;
+        text-align: center;
+    }
+    .movie-content .right {
+        width: 70%;
+    }
+    .img_limit img {
+        width: 130px;
+        height: 200px;
+    }
+    .img-avatar {
+        -moz-border-radius: 50%;
+	    -webkit-border-radius: 50%;
+	    border-radius: 50%;
+    }
+    .img-avatar:hover {
+        -moz-box-shadow: 0 0 25px rgb(184, 136, 229);
+	    -webkit-box-shadow: 0 0 25px rgb(184, 136, 229);
+	    box-shadow: 0 0 25px rgb(184, 136, 229);
+        cursor: pointer;
+    }
+    .select_info {
+        width: 100%;
+        padding: 5px 10px 5px 10px;
+    }
+    .el-avatar-loc {
+        margin: 10px 0 0 30px;
+    }
+</style>
+{% endblock %}
+
+{% block js %}
+    <script>
+        new Vue ({
+            el: '#app',
+            delimiters: ["[[", "]]"], // 更改双大括号规则，避免冲突
+            data() {
+                return {
+                    avatar_drawer: false,
+                    userinfo_drawer: false,
+                    a_direction: 'ltr',
+                    u_direction: 'rtl',
+                    labelPosition: 'left',
+                    add_activeNames: '1',
+                    avatar_id: '',
+                    formLabelAlign: {
+                        username: '{{ user.username }}',
+                        gender: '{{ user.gender }}',
+                        location: '{{ user.location}}',
+                        email: '{{ user.email }}',
+                    }
+                }
+            },
+            create() {
+                this.init_edit()
+            },
+            methods: {
+                // 添加文章侧边抽屉关闭之前的函数
+                handleClose(done) {
+                    done()
+                },
+                avatarClick(e,id) {
+                    console.log(id)
+                    e.active = !e.active
+                },
+                // 选择封面
+                select_avatar(val) {
+                    setTimeout(() => {
+                        let v = document.querySelector('.left input').value
+                        //console.log(v);
+                        let avatar = document.querySelector('.avatar_img')
+                        avatar.src = `/media/avatars/${v}`
+                    },1)
+                },
+            }
+        })
+
+    </script>
+{% endblock %}
