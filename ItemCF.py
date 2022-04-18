@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
 '''
-Created on 2015-06-22
+Created on 2022-04
 
-@author: Lockvictor
+@author: zzy
 '''
 import sys
 import random
@@ -30,8 +30,7 @@ class ItemBasedCF(object):
         self.movie_count = 0
 
         print('Similar movie number = %d' % self.n_sim_movie, file=sys.stderr)
-        print('Recommended movie number = %d' %
-              self.n_rec_movie, file=sys.stderr)
+        print('Recommended movie number = %d' % self.n_rec_movie, file=sys.stderr)
 
     @staticmethod
     def loadfile(filename):
