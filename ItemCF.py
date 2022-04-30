@@ -24,7 +24,7 @@ class ItemBasedCF(object):
 
         # 找到相似的20部电影，为目标用户推荐10部电影
         self.n_sim_movie = 20   # 相似的电影数量
-        self.n_rec_movie = 10   # 推荐的电影数量
+        self.n_rec_movie = 8   # 推荐的电影数量
 
         self.movie_sim_mat = {}
         self.movie_popular = {}

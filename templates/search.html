@@ -41,17 +41,17 @@
                     </div>
                 </a>
 
-            <div class="mid-1 agileits_w3layouts_mid_1_home">
-        <div class="w3l-movie-text">
-            <h6><a href="{% url 'movieinfo' movie.id %}">{{ movie.moviename }}</a></h6>
-        </div>
-        <div class="mid-2 agile_mid_2_home">
-            <p>{{ movie.releasedate }}</p>
-            <div class="rat2">{{movie.averating}}分</div>
-            <div class="rat"></div>
+                <div class="mid-1 agileits_w3layouts_mid_1_home">
+                    <div class="w3l-movie-text">
+                        <h6><a href="{% url 'movieinfo' movie.id %}">{{ movie.moviename }}</a></h6>
+                    </div>
+                    <div class="mid-2 agile_mid_2_home">
+                        <p>{{ movie.releasedate }}</p>
+                        <div class="rat2">{{movie.averating}}分</div>
+                        <div class="rat"></div>
 
 {#            每部电影下面的评分#}
-            <script>
+                        <script>
                 var rating = document.getElementsByClassName("rat");
                 var src;
                 if(parseFloat({{movie.averating}})>0.0&&parseFloat({{movie.averating}})<1.0){
@@ -71,14 +71,18 @@
                 //alert(src);
             </script>
 
-            <div class="rat"></div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-{% endfor %}
+                        <div class="rat"></div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <script>
+            alert("{{error_msg}}");
+            window.history.back(-1); //返回上一页
+        </script>
     {% endif %}
-
 <div style="text-align: center">
     {#   分页条   #}
     <nav aria-label="Page navigation">

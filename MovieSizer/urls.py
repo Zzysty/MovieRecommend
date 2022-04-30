@@ -36,7 +36,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name="register",),                # 注册
     path('movieinfo/<int:movie_id>', ContentView.as_view(), name='movieinfo'),  # 内容页
     path('add_comment/', AddComment.as_view(), name='addcomments'),             # 添加评论
-    path('del_ratmovie/<int:movie_id>', DelMovie.as_view(), name='del_ratmovie'),             # 删除评论
+    path('del_ratmovie/<int:movie_id>', DelMovie.as_view(), name='del_ratmovie'),  # 删除评论
 
     path('userinfo/', UserInfoView.as_view(), name='userinfo'),                 # 个人信息
     path('edit_userinfo/', EditUserView.as_view(), name='edit_userinfo'),       # 修改个人信息

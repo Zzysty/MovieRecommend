@@ -20,9 +20,9 @@ class UserBasedCF(object):  # 用户相似度算法
         self.trainset = {}  # train set
         self.testset = {}   # test set
 
-         # 找到与目标用户兴趣相似的n个用户，为其推荐n部电影
+         # 找到与目标用户兴趣相似的20个用户，为其推荐n部电影
         self.n_sim_user = 20    # number of similar users to recommend
-        self.n_rec_movie = 5    # number of recommendation
+        self.n_rec_movie = 16    # number of recommendation
 
         self.user_sim_mat = {}  
         self.movie_popular = {}
@@ -142,31 +142,31 @@ class UserBasedCF(object):  # 用户相似度算法
         ''' print evaluation result: precision, recall, coverage and popularity '''
         print ('Evaluation start...', file=sys.stderr)
 
-        N = self.n_rec_movie
+        N = self.n_rec_movie    # N个推荐电影
         #  varables for precision and recall
-        hit = 0
-        rec_count = 0
-        test_count = 0
+        hit = 0   # 推荐准确数
+        rec_count = 0   # 推荐总数
+        test_count = 0   # 测试总数
         # varables for coverage
-        all_rec_movies = set()
+        all_rec_movies = set()   # 所有推荐电影
         # varables for popularity
-        popular_sum = 0
+        popular_sum = 0  # 所有电影总的流行度
 
-        for i, user in enumerate(self.trainset):
+        for i, user in enumerate(self.trainset):    # 循环用户列表
             if i % 500 == 0:
                 print ('recommended for %d users' % i, file=sys.stderr)
-            test_movies = self.testset.get(user, {})
-            rec_movies = self.recommend(user)
-            for movie, _ in rec_movies:
-                if movie in test_movies:
-                    hit += 1
-                all_rec_movies.add(movie)
-                popular_sum += math.log(1 + self.movie_popular[movie])
-            rec_count += N
-            test_count += len(test_movies)
+            test_movies = self.testset.get(user, {})  # 获取用户测试电影
+            rec_movies = self.recommend(user)  # 推荐
+            for movie, _ in rec_movies:  # 循环推荐电影
+                if movie in test_movies:   # 如果电影已经测试
+                    hit += 1  # 推荐准确数加1
+                all_rec_movies.add(movie)  # 所有推荐电影加1
+                popular_sum += math.log(1 + self.movie_popular[movie])  # 流行度加1
+            rec_count += N    # 推荐总数加N
+            test_count += len(test_movies)  # 测试总数加1
 
-        precision = hit / (1.0 * rec_count)
-        recall = hit / (1.0 * test_count)
+        precision = hit / (1.0 * rec_count)  # 推荐准确率
+        recall = hit / (1.0 * test_count)    # 推荐召回率
         coverage = len(all_rec_movies) / (1.0 * self.movie_count)
         popularity = popular_sum / (1.0 * rec_count)
 
