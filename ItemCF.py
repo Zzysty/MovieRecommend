@@ -1,9 +1,3 @@
-#-*- coding: utf-8 -*-
-'''
-Created on 2022-04
-
-@author: zzy
-'''
 import sys
 import random
 import math
@@ -158,13 +152,17 @@ class ItemBasedCF(object):
             rec_count += N    # 推荐数加N
             test_count += len(test_movies)    # 测试数加电影数
 
+            print(test_movies)
+            print(rec_movies)
+
         precision = hit / (1.0 * rec_count)   # 准确率
         recall = hit / (1.0 * test_count)   # 召回率
         coverage = len(all_rec_movies) / (1.0 * self.movie_count)    # 覆盖率
         popularity = popular_sum / (1.0 * rec_count)    # 流行度
 
-        print ('precision=%.4f\trecall=%.4f\tcoverage=%.4f\tpopularity=%.4f' %
-               (precision, recall, coverage, popularity), file=sys.stderr)
+        # print('precision=%.4f\trecall=%.4f\tcoverage=%.4f\tpopularity=%.4f' %
+         #      (precision, recall, coverage, popularity), file=sys.stderr)
+
 
 
 if __name__ == '__main__':
