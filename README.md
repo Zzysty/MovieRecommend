@@ -24,6 +24,8 @@
       -  相似度电影列表
     - AddComment
       - 添加评论
+    - DelMovie
+      - 删除个人已评分电影
 
   - operation
 
@@ -98,7 +100,7 @@
   
     - ModifyView
   
-      因为<form>表单中的路径要是确定的，所以post函数另外定义一个类来完成，重置密码 post 部分，同步到数据库
+      因为 form 表单中的路径要是确定的，所以post函数另外定义一个类来完成，重置密码 post 部分，同步到数据库
   
     - UserInfoView
   

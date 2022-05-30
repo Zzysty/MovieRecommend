@@ -146,7 +146,7 @@ class ItemBasedCF(object):
             rec_movies = self.recommend(user)    # 获取用户推荐电影
             for movie, _ in rec_movies:    # 遍历推荐电影
                 if movie in test_movies:    # 如果电影在测试集
-                    hit += 1    # 命中加1
+                     hit += 1    # 命中加1
                 all_rec_movies.add(movie)    # 所有推荐电影加1
                 popular_sum += math.log(1 + self.movie_popular[movie])    # 流行度加1
             rec_count += N    # 推荐数加N
